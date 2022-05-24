@@ -1,5 +1,5 @@
 ---
--- include: java_installation.yml
--- include: postgresql.yml
--- include: sonarqube_installation.yml
--- include: sonarqube_conf.yml
+- include: java_installation.yml
+- include: postgresql.yml
+- include: sonarqube_installation.yml
+- include: sonarqube_conf.yml
