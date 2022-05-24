@@ -1,4 +1,8 @@
 ---
+- name: create sonar group
+  ansible.builtin.group:
+    name: sonar
+    state: present
 - name: createuser
   ansible.builtin.user:
     name: sonar
@@ -10,18 +14,18 @@
   ansible.builtin.package:
     name: zip
     state: present
-    update_cache: yes
-- name: Download sonarqube
-  ansible.builtin.get_url:
-    url: "{{ sonarqube_download_url }}"
-    dest: /tmp/sonarqube/
-    mode: '0750'
+    update_cache: yes   
 - name: Unarchive sonarqube
   ansible.builtin.unarchive:
-    src: /tmp/sonarqube/*.zip
+    src: "{{ sonarqube_download_url }}"
     dest: /opt/sonarqube/
     owner: sonar
-    group: sonar        
-    remote_src: yes
+    group: sonar  
+          
+    #remote_src: yes
+    mode: '0750'
+    extra_opts: "[--strip-components=1]"
+    
+    
     
     

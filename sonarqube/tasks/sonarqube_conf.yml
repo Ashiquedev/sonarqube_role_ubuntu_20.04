@@ -1,24 +1,24 @@
 ---
-- name: Create a configuration file odoo.conf
+- name: Create a properties file
   ansible.builtin.template:
-    dest: /opt/sonarqube/conf/sonar.properties
+    dest: /opt/sonarqube-9.4.0.54424/conf/sonar.properties
     src: 'sonar_properties.j2'
     mode: '0750'
     owner: sonar
   notify:
        - restart sonarqube
-- name: Create a configuration file odoo.conf
+- name: Create a sonar sh file
   ansible.builtin.template:
-    dest: /opt/sonarqube/bin/linux-x86-64/sonar.sh
+    dest: /opt/sonarqube-9.4.0.54424/bin/linux-x86-64/sonar.sh
     src: 'sonar_sh.j2'
     mode: '0750'
     owner: sonar
   notify:
        - restart sonarqube
-- name: Create a configuration file odoo.conf
+- name: Create a service file
   ansible.builtin.template:
     dest: /etc/systemd/system/sonar.service
-    src: 'sonarservice.j2'
+    src: 'sonar_service.j2'
     mode: '0750'
     owner: sonar
   notify:
@@ -37,7 +37,9 @@
        - restart sonarqube
 - name: start n enable sonarqube
   ansible.builtin.systemd:
-     name: /opt/sonarqube/bin/linux-x86-64/sonar.sh
+     name: sonar
      state: restarted
      daemon_reload: yes
      enabled: yes
+  notify:
+       - restart postgres

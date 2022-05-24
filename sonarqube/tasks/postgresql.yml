@@ -10,20 +10,22 @@
   with_items:
       - sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt/ `lsb_release -cs`-pgdg main" >> /etc/apt/sources.list.d/pgdg.list'
       - wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
-  warn: no
 - name: "Install packages"
   ansible.builtin.apt: 
     name: "{{ postgresql_package }}"
     state: present
     update_cache: yes
 - name: "Install Python packages"
-  pip: 
+  ansible.builtin.pip: 
+    name: "{{ python_packages }}"  
+    state: present
+- name: "Install Python packages"
+  ansible.builtin.pip: 
     name: "{{ postgresql_python_dep_package }}"  
     state: present
-    update_cache: yes
 - name: "Start and enable services"
   ansible.builtin.systemd: 
-    name: postgresql@12-main
+    name: postgresql@14-main
     state: started
     enabled: yes
 - name: "Create sonarqube database"
@@ -31,13 +33,13 @@
     state: present
     name: "{{ db_name }}"
   become: yes
-  become_user: postgre
+  become_user: postgres
 - name: "Create sonar db user"
   postgresql_user:
     state: present
     name: "{{ db_user }}"
     role_attr_flags: CREATEDB,CREATEROLE,SUPERUSER
-    password: "{{ db_password }}"
+    password: "{{ db_user_password }}"
   become: yes
   become_user: postgres
 - name: "Grant db user access to sonarqube db"
