@@ -1,2 +1,9 @@
 ---
-# tasks file for sonarqube
+- name: install sonarqube
+  hosts: all
+  become: yes
+  tasks:
+    -- include: java_installation.yml
+    -- include: postgresql.yml
+    -- include: sonarqube_installation.yml
+    -- include: sonarqube_conf.yml
