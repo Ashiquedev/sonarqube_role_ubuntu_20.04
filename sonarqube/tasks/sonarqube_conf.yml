@@ -1,7 +1,7 @@
 ---
 - name: Create a properties file
   ansible.builtin.template:
-    dest: /opt/sonarqube-9.4.0.54424/conf/sonar.properties
+    dest: "{{ sonar_home }}/conf/sonar.properties"
     src: 'sonar_properties.j2'
     mode: '0750'
     owner: sonar
@@ -9,7 +9,7 @@
        - restart sonarqube
 - name: Create a sonar sh file
   ansible.builtin.template:
-    dest: /opt/sonarqube-9.4.0.54424/bin/linux-x86-64/sonar.sh
+    dest: "{{ sonar_home }}/bin/linux-x86-64/sonar.sh"
     src: 'sonar_sh.j2'
     mode: '0750'
     owner: sonar

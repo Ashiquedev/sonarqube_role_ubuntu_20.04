@@ -8,7 +8,7 @@
     name: sonar
     state: present
     group: sonar
-    home: /opt/sonarqube
+    home: "{{ sonar_home }}"
     password: sonar
 - name: installing zip
   ansible.builtin.package:
@@ -18,7 +18,7 @@
 - name: Unarchive sonarqube
   ansible.builtin.unarchive:
     src: "{{ sonarqube_download_url }}"
-    dest: /opt/sonarqube/
+    dest: "{{ sonar_home }}"
     owner: sonar
     group: sonar  
           
