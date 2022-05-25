@@ -6,7 +6,7 @@ After=syslog.target network.target
 Type=forking
 
 ExecStart={{ sonar_home }}/bin/linux-x86-64/sonar.sh start
-ExecStop={{ sonar_home }}/bin/linux-x86-64/sonar.sh stop
+ExecStop={{ sonar_home }}/sonarqube-9.4.0.54424/bin/linux-x86-64/sonar.sh stop
 
 User=sonar
 Group=sonar

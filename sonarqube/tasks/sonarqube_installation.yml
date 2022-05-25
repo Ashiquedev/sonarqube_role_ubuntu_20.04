@@ -12,19 +12,21 @@
     password: sonar
 - name: installing zip
   ansible.builtin.package:
-    name: zip
+    name: unzip
     state: present
     update_cache: yes   
 - name: Unarchive sonarqube
   ansible.builtin.unarchive:
     src: "{{ sonarqube_download_url }}"
+    dest: /tmp/
+    owner: jenkins
+    group: jenkins
+    remote_src: yes
+- name: copy the files to sonar home dir
+  ansible.builtin.copy:
+    src: /tmp/sonarqube-9.4.0.54424/
     dest: "{{ sonar_home }}"
-    owner: sonar
-    group: sonar  
-          
-    #remote_src: yes
-    mode: '0750'
-    extra_opts: "[--strip-components=1]"
+
     
     
     
