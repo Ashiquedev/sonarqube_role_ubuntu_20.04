@@ -12,7 +12,7 @@
     password: sonar
 - name: installing zip
   ansible.builtin.package:
-    name: 7zip
+    name: unzip
     state: present
     update_cache: yes   
 - name: Unarchive sonarqube
